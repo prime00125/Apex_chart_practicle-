@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="dist/apexcharts.css">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .panel1{
+    display: flex;
+    justify-content: space-between;
+}  
+.graph{
+    height: 500px;
+    display: flex;
+    align-items: center;
+}
+.imgs{
+    display: flex;
+
+    width:min-content;
+    height: 450px;
+    position: relative;
+    top:-10px;
+
+
+    flex-direction: column;
+    justify-content: space-evenly; 
+}
+.p{
+    width:50px;
+    height: 30px;
+}
+#chart{
+
+    height: 500px;
+    width:97%;
+}
+    </style>
+  </head>
+
+  <body>
+    
+    <h3>Renewal Timeline</h3>
+    <div class="panel1" >
+        <div class="input-group mb-3" style="width:20%">
+            <input type="text" class="form-control" placeholder="Search by Company Name" aria-label="Recipient's username" aria-describedby="button-addon2" id="Search">
+            <button class="btn btn-outline-secondary" type="button" id="button-addon2" style="background-color: purple; width:20%"><i class="fa-solid fa-magnifying-glass" style="color:white"></i></button>
+          </div>
+    <div>
+        <label>Sort By:
+        <select  class="form-select form-select-sm" aria-label="small select example" name="Renewal" id="Renewal">
+            <option value="0" selected>Contract End Date</option>
+            <option value="1">Due in 30 days</option>
+            <option value="2">Due in 60 days</option>
+            <option value="3">Due in 90 days</option>
+        </label>
+            
+        </select>
+    </div>
+    </div>
+<!-- END of Panel1 -->
+<div class="card-body">
+<div class="cartHead">
+<h5>Company Name</h5>
+<!-- <div class="right">
+        
+</div> -->
+</div>
+<div class="graph">
+    
+    <div class="imgs">
+        <img src="/imags'/google.png" class="p">
+        <img src="/imags'/aws.jpg" class="p">
+        <img src="/imags'/virtusa.webp"class="p">
+        <img src="/imags'/getwell.png"class="p">
+        <img src="/imags'/orion.jpg"class="p">
+        <img src="/imags'/particle.webp"class="p">
+        <img src="/imags'/OneRecord.png" class="p">
+        <img src="/imags'/orion.jpg" class="p">
+        <img src="/imags'/redox.webp" class="p">
+        <img src="/imags'/philips.png" class="p">
+        <img src="/imags'/nuance.jpg" class="p">
+    </div>
+    <div id="chart">
+
+    </div>
+
+</div>
+</div>
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script>
+         var options = {
+
+          series: 
+          [ { 
+          data: ['11','7','9','3','4','5','8','2','6','10','1']
+        }],
+          chart: {
+            toolbar:{
+                show:false,
+                offsetX:0,
+                offsetY:0,
+            },
+          type: 'bar',
+          height: 500
+        },
+        plotOptions: {
+          bar: {
+            borderRadius: 5,
+            horizontal: true,
+          }
+        },
+        dataLabels: {
+        enabled: true,
+        position: 'top', 
+        formatter: function (val) {
+          var months = ['null','Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+          return months[val];
+        },
+        style: {
+          fontSize: '12px',
+          colors: ["white"],
+        },
+      },
+      color:{
+        ranges: [{
+            from: 0,
+            to: 11,
+            color: 'blue'
+          }]
+        },
+        xaxis: {
+          categories: ['Google Cloud','AWS','Virtusa','GetWellNetwork Inc','Orion Health Limited','Particle','One Record','Orion Health','Redox','Philips','Nuance'
+          ],
+        
+        },
+        yaxis:{
+            show:true,
+            showAlways:true,
+       
+    },
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart"), options);
+        chart.render();
+
+
+
+
+
+
+
+
+        document.getElementById("button-addon2").addEventListener("click", function() {
+      var searchTerm = document.getElementById("Search").value;
+           
+         
+       
+            searchTerm=searchTerm.toLowerCase().split();
+          
+            let categorie={
+                googlecloud:'11',
+                aws:'7',
+                virtusa:'9',
+                getwellnetworinc:'3',
+                orionhealthlimited:'4',
+                particle:'5',
+                onerecord:'8',
+                orionhealth:'2',
+                redox:'6',
+                philips:'10',
+                nuance:'1'
+            }
+          
+      
+      
+      var index = categorie[searchTerm];
+      console.log("the value of index",index)
+
+      
+      if (index !== -1) {
+        chart.updateOptions({
+          plotOptions: {
+            bar: {
+              colors: {
+                ranges: [{
+                  from: index,
+                  to: index,
+                  color: 'green'
+                }]
+              }
+            }
+          }
+        })
+    
+    }
+});
+     
+
+
+    document.getElementById("Renewal").addEventListener("change", function() {
+      var selectedValue = parseInt(this.value);
+
+    
+    
+    var AllMonths =     ['11','7','9','3','4','5','8','2','6','10','1'] 
+    var EndInthirty =      ['0','0','0','0','0','0','0','0','0','0','1']
+    var EndInsixty =   ['0','0','0','0','0','0','0','2','0','0','1']
+    var EndInninty =   ['0','0','0','3','0','0','0','2','0','0','1']   
+
+      // Update the series data and re-render the chart
+      if(selectedValue===0)
+      chart.updateSeries([{ data: AllMonths }]);
+      else if(selectedValue===1)
+      chart.updateSeries([{ data: EndInthirty }]);
+      else if(selectedValue===2)
+      chart.updateSeries([{ data: EndInsixty }]);
+      else if(selectedValue===3)
+      chart.updateSeries([{ data: EndInninty }]);
+        
+    
+    });
+    </script>
+    
+   
+    
+  </body>
+</html>
